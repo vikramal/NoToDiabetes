@@ -10,10 +10,23 @@ angular.module('starter.controllers', [])
    email: _remail,
    password: _rpassword
  }).then(function(userData) {
+   $state.go("login");
 }).catch(function(error) {
   console.error("Error: ", error);
 });
 }//end of register function
+
+$scope.login=function (_email, _password)
+{
+ $firebaseAuth(AUTHREF).$authWithPassword({
+   email: _email,
+   password: _password
+ }).then(function(authData) {
+  $state.go("app.playlists");
+}).catch(function(error) {
+  console.error("Error: ", error);
+});
+}//end of login function
 }])//end of loginCtrl controller
 
 .controller('PlaylistsCtrl', function($scope) {

@@ -16,6 +16,13 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
  controller: 'loginCtrl',
  cache:false
 })
+
+.state('login', {
+  url: '/login',
+  templateUrl: 'templates/login.html',
+ controller: 'loginCtrl',
+ cache:false
+})
     .state('app', {
     url: '/app',
     abstract: true,
@@ -70,7 +77,7 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/register');
+  $urlRouterProvider.otherwise('/login');
 })
 
 .run(function($ionicPlatform) {
