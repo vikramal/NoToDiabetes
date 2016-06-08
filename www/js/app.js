@@ -23,6 +23,12 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
  controller: 'loginCtrl',
  cache:false
 })
+.state('forgot', {
+  url: '/forgot',
+  templateUrl: 'templates/forgot.html',
+ controller: 'loginCtrl',
+ cache:false
+})
     .state('app', {
     url: '/app',
     abstract: true,
@@ -62,6 +68,16 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
       views: {
         'menuContent': {
           templateUrl: 'templates/register.html',
+          controller: 'loginCtrl'
+        }
+      }
+    })
+
+    .state('app.forgot', {
+      url: '/forgot',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/forgot.html',
           controller: 'loginCtrl'
         }
       }

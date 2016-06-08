@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
    email: _remail,
    password: _rpassword
  }).then(function(userData) {
-   $state.go("login");
+   $state.go("login ");
 }).catch(function(error) {
   console.error("Error: ", error);
 });
@@ -27,6 +27,18 @@ $scope.login=function (_email, _password)
   console.error("Error: ", error);
 });
 }//end of login function
+
+$scope.forgotmail=function(_femail)
+{
+  var authObj = $firebaseAuth(AUTHREF);
+  authObj.$resetPassword({
+  email: _femail
+}).then(function() {
+  console.log("Password reset email sent successfully!");
+}).catch(function(error) {
+  console.error("Error: ", error);
+});
+}//end of forgot password function
 }])//end of loginCtrl controller
 
 .controller('PlaylistsCtrl', function($scope) {
