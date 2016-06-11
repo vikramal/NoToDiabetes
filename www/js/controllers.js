@@ -123,3 +123,86 @@ $scope.logout=function()
   $state.go("protected");
 }
 }])//end of AppCtrl
+
+.controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function loginCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF)
+{
+
+  $scope.acct = {
+  name: null,
+  email: null,
+  sex : null,
+  type: null,
+  age: null,
+  food: null,
+  level: null,
+  profession: null
+
+};
+
+console.log($scope.acct);
+
+$scope.selectSex = function(_sex){
+  $scope.acct.sex = _sex;
+}
+$scope.selectType = function(_type){
+  $scope.acct.type = _type;
+}
+$scope.selectAge = function(_age){
+  $scope.acct.age = _age;
+}
+$scope.selectFood = function(_food){
+  $scope.acct.food = _food;
+}
+$scope.selectLevel = function(_level){
+  $scope.acct.level = _level;
+}
+$scope.selectProf = function(_prof){
+  $scope.acct.profession = _prof;
+  console.log($scope.acct);
+}
+
+$scope.acctList = function(){
+
+  var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+  if (fbAuth)
+  {
+    var ref = ITEMREF.child(fbAuth.uid).child("account");
+    var obj = $firebaseObject(ref);
+
+    obj.$loaded().then(function(x)
+    {
+      obj === x;
+      $scope.details = obj;
+
+
+    })
+  }//end of fbAuth
+}//end of account list function
+
+  $scope.saveAccount = function(_fname){
+
+$scope.acct.name = _fname;
+
+var authObj = $firebaseAuth(AUTHREF).$getAuth();
+var obj = ITEMREF.child(authObj.uid);
+
+$scope.acct.email = authObj.password.email;
+
+var prof = $firebaseObject(obj);
+
+prof.account = $scope.acct;
+
+prof.$save().then(function(ITEMREF){
+  $ionicLoading.show({
+    template:'<center>Saving Account Information.</center>',
+    duration: 2000
+  });
+$state.go("app.news");
+  console.log(prof.$id);
+
+}, function(error){
+  console.log("Error: ", error);
+});
+
+}//end of saveAccount function
+}])//end of Account CTRL

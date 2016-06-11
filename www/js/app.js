@@ -6,6 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'starter.controllers','firebase'])
 .value ("AUTHREF",new Firebase ("https://no2diabetes.firebaseio.com/"))
+.value("ITEMREF", new Firebase ("https://no2diabetes.firebaseio.com/notodiabetes"))
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -16,7 +17,7 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
   controller: 'protectedCtrl',
   cache:false
   })
-  
+
   .state('login', {
   url: '/login',
   templateUrl: 'templates/login.html',
@@ -30,6 +31,16 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
+
+  .state('app.account', {
+      url: '/account',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/account.html',
+          controller: 'AccountCtrl'
+        }
+      }
+    })
 
     .state('app.news', {
       url: '/news',
