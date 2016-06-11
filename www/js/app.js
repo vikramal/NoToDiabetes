@@ -10,25 +10,13 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('register', {
-  url: '/register',
-  templateUrl: 'templates/register.html',
- controller: 'loginCtrl',
- cache:false
-})
-
-.state('login', {
+  .state('login', {
   url: '/login',
   templateUrl: 'templates/login.html',
  controller: 'loginCtrl',
  cache:false
 })
-.state('forgot', {
-  url: '/forgot',
-  templateUrl: 'templates/forgot.html',
- controller: 'loginCtrl',
- cache:false
-})
+
     .state('app', {
     url: '/app',
     abstract: true,
@@ -36,65 +24,19 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-
-  .state('app.browse', {
-      url: '/browse',
+    .state('app.news', {
+      url: '/news',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/news.html',
         }
       }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
+    });
 
-    .state('app.register', {
-      url: '/register',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/register.html',
-          controller: 'loginCtrl'
-        }
-      }
-    })
-
-    .state('app.forgot', {
-      url: '/forgot',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/forgot.html',
-          controller: 'loginCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('login');
 })
+
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

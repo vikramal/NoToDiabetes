@@ -4,7 +4,7 @@
       <div class="list">
           <label class="item item-input item-floating-label">
             <span class="input-label">E-mail</span>
-            <input type="email" ng-model="email" placeholder="abc@notodiabetes.com" required="yes">
+            <input type="email" ng-model="email" placeholder="abc@noto.com" required="yes">
           </label>
           <label class="item item-input item-floating-label">
             <span class="input-label">Password</span>
@@ -13,15 +13,12 @@
           <button class="button button-block button-calm" ng-disabled="!email || !password" ng-click="login(email,password)">
               Login
           </button>
-          <br>
-          <ion-list>
-            <ion-item menu-close href="#/app/forgot">
-              Forgot Password
-            </ion-item>
-          <ion-item menu-close href="#/app/register">
-            Register
-          </ion-item>
-        </ion-list>
+          <a class="button button-clear button-block button-dark" ng-click="forgot.show()">
+            Forgot Password?
+          </a>
+          <button class="button button-block button-positive" ng-click="signup.show()">
+              Register
+          </button>
       </div>
     </form>
   </ion-content>
