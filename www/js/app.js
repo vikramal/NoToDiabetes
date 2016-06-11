@@ -10,6 +10,13 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+  .state('protected', {
+  url: '/protected',
+  templateUrl: 'templates/protected.html',
+  controller: 'protectedCtrl',
+  cache:false
+  })
+  
   .state('login', {
   url: '/login',
   templateUrl: 'templates/login.html',
@@ -34,7 +41,7 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('login');
+  $urlRouterProvider.otherwise('protected');
 })
 
 

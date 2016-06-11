@@ -99,6 +99,20 @@ $scope.forgotmail=function(_femail)
 
 }])//end of login controller
 
+.controller('protectedCtrl',['$scope','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$firebaseAuth,$state,AUTHREF)
+{
+  $scope.checklogin=function()
+  {
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+    if(fbAuth)
+    {
+      $state.go("app.news");
+    }
+    else {
+      $state.go("login");
+    }
+  }
+}])//end of protectedCtrl
 
 .controller('AppCtrl',['$scope','$ionicModal','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$firebaseAuth,$state,AUTHREF)
 {
@@ -106,6 +120,6 @@ $scope.logout=function()
 {
   var fbAuth = $firebaseAuth(AUTHREF);
   fbAuth.$unauth();
-  $state.go("login");
+  $state.go("protected");
 }
 }])//end of AppCtrl
