@@ -1,56 +1,125 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('loginCtrl',['$scope','$ionicModal','$ionicLoading','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$ionicLoading,$firebaseAuth,$state,AUTHREF)
+{
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+$ionicModal.fromTemplateUrl('templates/modals/register.html',
+{
+   scope: $scope,
+   animation: 'slide-in-up'
+ }).then(function(signup) {
+   $scope.signup = signup;
+ });//signup modal
 
-  // Form data for the login modal
-  $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
+ $ionicModal.fromTemplateUrl('templates/modals/forgot.html',
+ {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(forgot) {
+    $scope.forgot = forgot;
+  });//forgot modal
+
+$scope.register=function (_remail, _rpassword)
+{
+  $ionicLoading.show({
+    template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Creating An Account...</center>'
+  });
+ $firebaseAuth(AUTHREF).$createUser({
+   email: _remail,
+   password: _rpassword
+ }).then(function(userData) {
+
+  $ionicLoading.hide();
+  $ionicLoading.show({
+    template:'<center>Account Created Successfully<br>Please Login To Continue</center>',
+    duration: 1000
+  });
+  $scope.signup.hide();
+    $state.go('login');
+}).catch(function(error) {
+  console.error("Error: ", error);
+  $ionicLoading.show({
+    template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>'+ error.message+ ' Signup Failed!</center>',
+    duration: 2000
+  });
+});
+}//end of register function
+
+$scope.login=function (_email, _password)
+{
+  $ionicLoading.show({
+    template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Signing In...</center>'
+
+  });
+ $firebaseAuth(AUTHREF).$authWithPassword({
+   email: _email,
+   password: _password
+ }).then(function(authData) {
+$ionicLoading.hide();
+$ionicLoading.show({
+  template:'<center>Signin Successful</center>',
+  duration: 1000
+});
+  $state.go("app.news");
+}).catch(function(error) {
+  console.error("Error: ", error);
+  $ionicLoading.show({
+    template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>'+ error.message+ ' Signin Failed!</center>',
+    duration: 1500
+  });
+});
+}//end of login function
+
+$scope.forgotmail=function(_femail)
+{
+  $ionicLoading.show({
+    template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Sending Email...</center>'
   });
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+  var authObj = $firebaseAuth(AUTHREF);
+  authObj.$resetPassword({
+  email: _femail
+}).then(function() {
+  console.log("Password reset email sent successfully!");
+    $ionicLoading.hide();
+  $ionicLoading.show({
+    template:'<center>A temporary password has been sent to your registered email.<br> Please follow the instructions in the email to reset your password.</center>',
+    duration: 4000
+  });
+  $scope.forgot.hide();
+}).catch(function(error) {
+  console.error("Error: ", error);
+  $ionicLoading.show({
+    template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>'+ error.message+ '</center>',
+    duration: 2000
+  });
 });
+}//end of forgot password function
+
+}])//end of login controller
+
+.controller('protectedCtrl',['$scope','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$firebaseAuth,$state,AUTHREF)
+{
+  $scope.checklogin=function()
+  {
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+    if(fbAuth)
+    {
+      $state.go("app.news");
+    }
+    else {
+      $state.go("login");
+    }
+  }
+}])//end of protectedCtrl
+
+.controller('AppCtrl',['$scope','$ionicModal','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$firebaseAuth,$state,AUTHREF)
+{
+$scope.logout=function()
+{
+  var fbAuth = $firebaseAuth(AUTHREF);
+  fbAuth.$unauth();
+  $state.go("protected");
+}
+}])//end of AppCtrl

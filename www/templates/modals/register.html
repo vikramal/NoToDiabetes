@@ -1,0 +1,21 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">Register</h1>
+      <button class="button button-clear button-light" ng-click="signup.hide()">Close</button>
+  </ion-header-bar>
+  <ion-content padding="true">
+    <div class="list">
+  <label class="item item-input item-floating-label">
+            <span class="input-label">E-mail ID</span>
+            <input type="email" ng-model="remail" placeholder="E-mail ID" required="yes">
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Password</span>
+            <input type="password" ng-model="rpassword" placeholder="Password" required="yes">
+          </label>
+          <button class="button button-full button-positive" ng-disabled="!remail || !rpassword" ng-click="register(remail,rpassword)">
+              Sign-up
+          </button>
+</div>
+</ion-content>
+</ion-modal-view>
