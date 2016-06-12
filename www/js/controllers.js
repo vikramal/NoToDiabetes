@@ -193,16 +193,51 @@ var prof = $firebaseObject(obj);
 prof.account = $scope.acct;
 
 prof.$save().then(function(ITEMREF){
-  $ionicLoading.show({
-    template:'<center>Saving Account Information.</center>',
-    duration: 2000
-  });
-$state.go("app.news");
   console.log(prof.$id);
-
 }, function(error){
   console.log("Error: ", error);
 });
 
 }//end of saveAccount function
+
+$ionicModal.fromTemplateUrl('templates/modals/editaccount.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(editacct) {
+     $scope.editacct = editacct;
+   });//end of edit account modal
+
+   $scope.edit=function(_details)
+   {
+     $scope.editacct.show();
+     $scope.edetails = _details;
+
+     console.log($scope.edetails);
+}//end of edit function
+
+$scope.editAccount = function(_edetails){
+
+  var authObj = $firebaseAuth(AUTHREF).$getAuth();
+  var obj = ITEMREF.child(authObj.uid);
+
+  var prof = $firebaseObject(obj);
+
+  prof.account = _edetails;
+
+  prof.$save().then(function(ITEMREF){
+    $ionicLoading.show({
+      template:'<center>Updating Account Information.</center>',
+      duration: 2000
+    });
+  $state.go("app.vaccount");
+    console.log(prof.$id);
+    $scope.editacct.hide();
+  }, function(error){
+    console.log("Error: ", error);
+  });
+
+
+
+}//end of edit account function
 }])//end of Account CTRL
