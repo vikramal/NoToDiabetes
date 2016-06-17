@@ -127,8 +127,12 @@ $scope.logout=function()
 .controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function loginCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF)
 {
 
-   $scope.changepwd=function(_oldpwd,_newpwd)
+    $scope.changepwd=function(_oldpwd,_newpwd)
      {
+       $ionicLoading.show({
+         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Changing Password...</center>'
+       });
+
        var authObj = $firebaseAuth(AUTHREF);
        var fbauth = $firebaseAuth(AUTHREF).$getAuth();
        var email = fbauth.password.email;
@@ -138,8 +142,18 @@ $scope.logout=function()
        newPassword: _newpwd
      }).then(function() {
        console.log("Password Changed Successfully!");
+         $ionicLoading.hide();
+       $ionicLoading.show({
+         template:'<center>Password Changed Successfully!<br>Please Login with new Password</center>',
+         duration: 2500
+       });
+       $state.go("login");
      }).catch(function(error) {
        console.error("Error: ", error);
+       $ionicLoading.show({
+         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>'+ error.message+ '</center>',
+         duration: 2000
+       });
      });
    }//end of change password function
 
