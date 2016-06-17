@@ -127,6 +127,22 @@ $scope.logout=function()
 .controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function loginCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF)
 {
 
+   $scope.changepwd=function(_oldpwd,_newpwd)
+     {
+       var authObj = $firebaseAuth(AUTHREF);
+       var fbauth = $firebaseAuth(AUTHREF).$getAuth();
+       var email = fbauth.password.email;
+       authObj.$changePassword({
+       email: email,
+       oldPassword: _oldpwd,
+       newPassword: _newpwd
+     }).then(function() {
+       console.log("Password Changed Successfully!");
+     }).catch(function(error) {
+       console.error("Error: ", error);
+     });
+   }//end of change password function
+
   $scope.acct = {
   name: null,
   email: null,
@@ -193,7 +209,13 @@ var prof = $firebaseObject(obj);
 prof.account = $scope.acct;
 
 prof.$save().then(function(ITEMREF){
+  $ionicLoading.show({
+    template:'<center>Saving Account Information.</center>',
+    duration: 2000
+  });
+$state.go("app.vaccount");
   console.log(prof.$id);
+
 }, function(error){
   console.log("Error: ", error);
 });

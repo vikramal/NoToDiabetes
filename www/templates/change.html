@@ -1,0 +1,21 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">Change Password</h1>
+      <button class="button button-clear button-light" ng-click="change.hide()">Close</button>
+  </ion-header-bar>
+  <ion-content class="padding" padding="true">
+    <div class="list card">
+      <label class="item item-input">
+          <span class="input-label">Old Password</span>
+      <input type="password" ng-model="opwd" required="yes">
+      </label>
+      <label class="item item-input">
+          <span class="input-label">New Password</span>
+      <input type="password" ng-model="npwd" required="yes">
+      </label>
+          <button class="button button-full button-positive" ng-disabled="!opwd || !npwd" ng-click="changepwd(opwd,npwd)">
+              Submit
+          </button>
+</div>
+</ion-content>
+</ion-modal-view>
