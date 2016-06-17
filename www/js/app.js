@@ -42,6 +42,16 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
       }
     })
     
+    .state('app.reminder', {
+      url: '/reminder',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/addreminder.html',
+          controller: 'ReminderCtrl'
+        }
+      }
+    })
+
     .state('app.vaccount', {
     url: '/vaccount',
     views: {

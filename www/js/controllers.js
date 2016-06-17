@@ -285,3 +285,32 @@ $scope.editAccount = function(_edetails){
 
 }//end of edit account function
 }])//end of Account CTRL
+
+.controller('ReminderCtrl',['$scope','$firebaseAuth','$firebaseArray','$ionicLoading','$ionicModal','$state','$filter','AUTHREF','ITEMREF',function ReminderCtrl($scope,$firebaseAuth,$firebaseArray,$ionicLoading,$ionicModal,$state,$filter,AUTHREF,ITEMREF)
+{
+
+  $scope.repeat = false;
+
+  $scope.reminderadd = function(rname,rdate,rtime,rdescip,repeat)
+  {
+    var _date = $filter('date')(rdate, 'MM/dd/yyyy');
+    var _time = $filter('date')(rtime, 'H:mm');
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+    if (fbAuth)
+    {
+      var obj = ITEMREF.child(fbAuth.uid).child("reminder");
+      var obj1 = $firebaseArray(obj);
+      obj1.$add(
+        {name: rname,
+          date: _date,
+          time : _time,
+          repeat: repeat,
+          description: rdescip
+        }).then(function(ref)
+        {
+          console.log(ref.key())});
+        }
+  }//end of add reminder
+
+}])//end of reminder control
+
