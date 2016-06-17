@@ -46,7 +46,7 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
       url: '/reminder',
       views: {
         'menuContent': {
-          templateUrl: 'templates/addreminder.html',
+          templateUrl: 'templates/reminder.html',
           controller: 'ReminderCtrl'
         }
       }

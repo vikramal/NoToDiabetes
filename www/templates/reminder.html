@@ -1,0 +1,17 @@
+<ion-view title="Reminder" ng-init=viewreminder()>
+  <ion-nav-buttons side="right">
+    <button class="button button-clear light icon ion-plus-round" ng-click="addreminder.show()">
+    </button>
+  </ion-nav-buttons>
+      <ion-content class="padding" padding="true" class="pane">
+        <div class="list card">
+<div class="item item-text-wrap" ng-repeat="r in listofreminders" ng-click="ereminder(r,r.$id)">
+
+          Name : {{r.name}}<br>
+          Date : {{r.date}}<br>
+          Time : {{r.time}}<br>
+          Description : {{r.description}}<br>
+          Repeat : {{r.repeat}}<br>
+</div>
+      </ion-content>
+</ion-view>

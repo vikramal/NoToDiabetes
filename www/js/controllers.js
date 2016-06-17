@@ -289,7 +289,23 @@ $scope.editAccount = function(_edetails){
 .controller('ReminderCtrl',['$scope','$firebaseAuth','$firebaseArray','$ionicLoading','$ionicModal','$state','$filter','AUTHREF','ITEMREF',function ReminderCtrl($scope,$firebaseAuth,$firebaseArray,$ionicLoading,$ionicModal,$state,$filter,AUTHREF,ITEMREF)
 {
 
-  $scope.repeat = false;
+    $scope.repeat = false;
+
+  $ionicModal.fromTemplateUrl('templates/modals/addreminder.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(addreminder) {
+     $scope.addreminder = addreminder;
+   });//add reminder modal
+
+   $ionicModal.fromTemplateUrl('templates/modals/editreminder.html',
+   {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(editreminder) {
+      $scope.editreminder = editreminder;
+    });//edit reminder modal
 
   $scope.reminderadd = function(rname,rdate,rtime,rdescip,repeat)
   {
@@ -308,9 +324,112 @@ $scope.editAccount = function(_edetails){
           description: rdescip
         }).then(function(ref)
         {
+          $scope.addreminder.hide();
           console.log(ref.key())});
         }
   }//end of add reminder
+
+
+  $scope.viewreminder = function()
+  {
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+
+    if (fbAuth)
+    {
+      var ref = ITEMREF.child(fbAuth.uid).child("reminder");
+      var reminder = $firebaseArray(ref);
+      reminder.$loaded().then(function(x){
+        x === reminder;
+        $scope.listofreminders = reminder;
+      }).catch(function(error){
+        console.log(error.message);
+      });
+
+    }
+  }//end of view reminders
+
+  $scope.ereminder = function(_r,_id)
+  {
+    var vikram = new Date();
+    var d = _r.date;
+    var fd = new Date(d);
+    console.log(fd);
+    $scope.erem = {
+
+      name: _r.name,
+      date: fd,
+      time: null,
+      description:_r.description,
+      repeat: _r.repeat,
+      id: _id
+    };
+
+    var rtime = fd;
+    rtime = $filter('date')(rtime,'MM/dd/yyyy');
+    rtime = rtime + ' ' + _r.time;
+    $scope.erem.time = new Date(rtime);
+    console.log($scope.erem.time);
+    $scope.editreminder.show();
+  }
+
+  $scope.reminderedit = function(_erem)
+  {
+      var d = $filter('date')(_erem.date,'MM/dd/yyyy');
+      var fd = d.toString();
+      console.log(d,fd);
+      var t = $filter('date')(_erem.time,'H:mm');
+      var ft = t.toString();
+      console.log(t,ft);
+
+      var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+
+      if (fbAuth)
+      {
+        var ref = ITEMREF.child(fbAuth.uid).child("reminder");
+        var obj = $firebaseArray(ref);
+        obj.$loaded().then(function(x){
+          x === obj;
+          var i = obj.$indexFor(_erem.id);
+          obj[i].name=_erem.name;
+          obj[i].date= fd;
+          obj[i].time= ft;
+          obj[i].description=_erem.description;
+          obj[i].repeat=_erem.repeat;
+          obj.$save(i).then(function(ref){
+            ref.key() === obj.$id;
+            $scope.editreminder.hide();
+          },function(error){
+            $scope.editreminder.hide();
+            console.log(error.message);
+          });//end of $save
+        })//end of $loaded
+  }// end of fbauth
+}//end of edit function
+
+  $scope.reminderdelete = function(_id) {
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+
+    if (fbAuth)
+    {
+      var ref = ITEMREF.child(fbAuth.uid).child("reminder");
+      var obj = $firebaseArray(ref);
+      obj.$loaded().then(function(x){
+        x === obj;
+        var i = obj.$indexFor(_id);
+        var item = obj[i];
+        obj.$remove(item).then(function(ref){
+          ref.key() === item.$id;
+          $scope.editreminder.hide();
+        }, function(error){
+          console.log(error.message);
+          $scope.editreminder.hide();
+        })
+      }).catch(function(error){
+        console.log(error.message);
+        $scope.editreminder.hide();
+      });
+  }
+}
 
 }])//end of reminder control
 

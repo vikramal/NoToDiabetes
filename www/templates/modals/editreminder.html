@@ -1,0 +1,39 @@
+<ion-modal-view class="pane">
+<ion-header-bar class="bar-dark">
+  <h1 class="title">Edit Reminder</h1>
+    <button class="button button-clear button-light" ng-click="editreminder.hide()">Close</button>
+</ion-header-bar>
+<ion-content class="padding" padding="true" class="pane">
+  <div class="list card item-text-wrap">
+
+  <form name="editreminderForm">
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Title</span>
+    <input type="text" ng-model="erem.name" placeholder="Breakfast" required="yes">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Date</span>
+    <input type="date" ng-model="erem.date" required="yes">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Time</span>
+    <input type="time" ng-model="erem.time" required="yes">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Description</span>
+    <input type="text" ng-model="erem.description" placeholder="1 skim milk" required="yes">
+  </label>
+  <ion-checkbox ng-model="erem.repeat">Repeat</ion-checkbox>
+  </form>
+  <div class="item">
+  <button class="button button-block button-positive" ng-disabled="editreminderForm.$invalid" ng-click="reminderedit(erem)">
+      Update
+  </button>
+  <button class="button button-block button-assertive" ng-disabled="reminderForm.$invalid" ng-click="reminderdelete(erem.id)">
+      Delete
+  </button>
+</div>
+
+</div>
+</ion-content>
+</ion-modal-view>
