@@ -127,7 +127,15 @@ $scope.logout=function()
 .controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function loginCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF)
 {
 
-    $scope.changepwd=function(_oldpwd,_newpwd)
+    $ionicModal.fromTemplateUrl('templates/modals/change.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(change) {
+     $scope.change = change;
+   });//change password modal
+
+   $scope.changepwd=function(_oldpwd,_newpwd)
      {
        $ionicLoading.show({
          template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Changing Password...</center>'
@@ -144,10 +152,10 @@ $scope.logout=function()
        console.log("Password Changed Successfully!");
          $ionicLoading.hide();
        $ionicLoading.show({
-         template:'<center>Password Changed Successfully!<br>Please Login with new Password</center>',
-         duration: 2500
+         template:'<center>Password Changed Successfully!</center>',
+         duration: 2000
        });
-       $state.go("login");
+       $scope.change.hide();
      }).catch(function(error) {
        console.error("Error: ", error);
        $ionicLoading.show({

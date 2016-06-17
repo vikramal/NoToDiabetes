@@ -53,17 +53,6 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     }
   })
 
-    .state('app.change', {
-    url: '/change',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/change.html',
-        controller: 'AccountCtrl',
-        cache:false
-      }
-    }
-  })
-
     .state('app.news', {
       url: '/news',
       views: {
