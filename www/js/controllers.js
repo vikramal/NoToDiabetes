@@ -123,3 +123,165 @@ $scope.logout=function()
   $state.go("protected");
 }
 }])//end of AppCtrl
+
+.controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function loginCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF)
+{
+
+    $ionicModal.fromTemplateUrl('templates/modals/change.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(change) {
+     $scope.change = change;
+   });//change password modal
+
+   $scope.changepwd=function(_oldpwd,_newpwd)
+     {
+       $ionicLoading.show({
+         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Changing Password...</center>'
+       });
+
+       var authObj = $firebaseAuth(AUTHREF);
+       var fbauth = $firebaseAuth(AUTHREF).$getAuth();
+       var email = fbauth.password.email;
+       authObj.$changePassword({
+       email: email,
+       oldPassword: _oldpwd,
+       newPassword: _newpwd
+     }).then(function() {
+       console.log("Password Changed Successfully!");
+         $ionicLoading.hide();
+       $ionicLoading.show({
+         template:'<center>Password Changed Successfully!</center>',
+         duration: 2000
+       });
+       $scope.change.hide();
+     }).catch(function(error) {
+       console.error("Error: ", error);
+       $ionicLoading.show({
+         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>'+ error.message+ '</center>',
+         duration: 2000
+       });
+     });
+   }//end of change password function
+
+  $scope.acct = {
+  name: null,
+  email: null,
+  sex : null,
+  type: null,
+  age: null,
+  food: null,
+  level: null,
+  profession: null
+
+};
+
+console.log($scope.acct);
+
+$scope.selectSex = function(_sex){
+  $scope.acct.sex = _sex;
+}
+$scope.selectType = function(_type){
+  $scope.acct.type = _type;
+}
+$scope.selectAge = function(_age){
+  $scope.acct.age = _age;
+}
+$scope.selectFood = function(_food){
+  $scope.acct.food = _food;
+}
+$scope.selectLevel = function(_level){
+  $scope.acct.level = _level;
+}
+$scope.selectProf = function(_prof){
+  $scope.acct.profession = _prof;
+  console.log($scope.acct);
+}
+
+$scope.acctList = function(){
+
+  var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+  if (fbAuth)
+  {
+    var ref = ITEMREF.child(fbAuth.uid).child("account");
+    var obj = $firebaseObject(ref);
+
+    obj.$loaded().then(function(x)
+    {
+      obj === x;
+      $scope.details = obj;
+
+
+    })
+  }//end of fbAuth
+}//end of account list function
+
+  $scope.saveAccount = function(_fname){
+
+$scope.acct.name = _fname;
+
+var authObj = $firebaseAuth(AUTHREF).$getAuth();
+var obj = ITEMREF.child(authObj.uid);
+
+$scope.acct.email = authObj.password.email;
+
+var prof = $firebaseObject(obj);
+
+prof.account = $scope.acct;
+
+prof.$save().then(function(ITEMREF){
+  $ionicLoading.show({
+    template:'<center>Saving Account Information.</center>',
+    duration: 2000
+  });
+$state.go("app.vaccount");
+  console.log(prof.$id);
+
+}, function(error){
+  console.log("Error: ", error);
+});
+
+}//end of saveAccount function
+
+$ionicModal.fromTemplateUrl('templates/modals/editaccount.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(editacct) {
+     $scope.editacct = editacct;
+   });//end of edit account modal
+
+   $scope.edit=function(_details)
+   {
+     $scope.editacct.show();
+     $scope.edetails = _details;
+
+     console.log($scope.edetails);
+}//end of edit function
+
+$scope.editAccount = function(_edetails){
+
+  var authObj = $firebaseAuth(AUTHREF).$getAuth();
+  var obj = ITEMREF.child(authObj.uid);
+
+  var prof = $firebaseObject(obj);
+
+  prof.account = _edetails;
+
+  prof.$save().then(function(ITEMREF){
+    $ionicLoading.show({
+      template:'<center>Updating Account Information.</center>',
+      duration: 2000
+    });
+  $state.go("app.vaccount");
+    console.log(prof.$id);
+    $scope.editacct.hide();
+  }, function(error){
+    console.log("Error: ", error);
+  });
+
+
+
+}//end of edit account function
+}])//end of Account CTRL

@@ -1,0 +1,40 @@
+<ion-view title="Account" cache="false" ng-init="acctList()">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-light icon ion-edit" style="color:white;" ng-click="edit(details)">
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="padding" padding="true">
+    <div class="list card item-text-wrap">
+
+      <div class="item">
+        Name : {{details.name}}
+      </div>
+      <div class="item">
+        Email : {{details.email}}
+      </div>
+      <div class="item">
+        Age : {{details.age}}
+      </div>
+      <div class="item">
+        Sex : {{details.sex}}
+      </div>
+      <div class="item">
+        Profession : {{details.profession}}
+      </div>
+      <div class="item">
+        Diabetes Type : {{details.type}}
+      </div>
+      <div class="item">
+        Sugar Level : {{details.level}} mg/dl
+      </div>
+      <div class="item">
+        Food habbit : {{details.food}}
+      </div>
+    </div>
+    <div class="item">
+    <button class="button button-block button-assertive" ng-click="change.show()">
+        Change Password
+    </button>
+  </div>
+  </ion-content>
+</ion-view>

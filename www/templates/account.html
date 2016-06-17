@@ -1,0 +1,75 @@
+<ion-view view-title="Account">
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">Edit Account</h1>
+      <button class="button button-clear button-light" ng-click="editacct.hide()">Close</button>
+  </ion-header-bar>
+  <ion-content class="padding" padding="true">
+    <form>
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="fname" placeholder="John Smith">
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Sex
+          </div>
+          <select ng-model="sex" ng-change="selectSex(sex)">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Diabetes Type
+          </div>
+          <select ng-model="type" ng-change="selectType(type)">
+            <option value="Type 1">Type 1</option>
+            <option value="Type 2">Type 2</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Age category
+          </div>
+          <select ng-model="age" ng-change="selectAge(age)">
+            <option value="< 30">less than 30</option>
+            <option value="30 - 60">30 - 60</option>
+            <option value="> 60 ">above 60</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Food Habbit
+          </div>
+          <select ng-model="food" ng-change="selectFood(food)">
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Non-Vegetarian">Non-Vegetarian</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Sugar lvl
+          </div>
+          <select ng-model="level" ng-change="selectLevel(level)">
+            <option value="127-153">127-153(Normal)</option>
+            <option value="154-195">154-195(Monitor)</option>
+            <option value="Keeps Fluctuating">Keeps Fluctuating</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Occupation
+          </div>
+          <select ng-model="prof" ng-change="selectProf(prof)">
+            <option value="Professional">Professional</option>
+            <option value="Non-Professional">Non-Professional</option>
+          </select>
+        </label>
+        <button class="button button-block button-positive" ng-click="saveAccount(fname)">
+            Update
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
