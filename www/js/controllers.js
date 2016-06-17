@@ -3,15 +3,6 @@ angular.module('starter.controllers', [])
 .controller('loginCtrl',['$scope','$ionicModal','$ionicLoading','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$ionicLoading,$firebaseAuth,$state,AUTHREF)
 {
 
-$ionicModal.fromTemplateUrl('templates/modals/register.html',
-{
-   scope: $scope,
-   animation: 'slide-in-up'
- }).then(function(signup) {
-   $scope.signup = signup;
- });//signup modal
-
-
  $ionicModal.fromTemplateUrl('templates/modals/forgot.html',
  {
     scope: $scope,
@@ -32,11 +23,10 @@ $scope.register=function (_remail, _rpassword)
 
   $ionicLoading.hide();
   $ionicLoading.show({
-    template:'<center>Account Created Successfully<br>Please Login To Continue</center>',
+    template:'<center>Account Created Successfully</center>',
     duration: 1000
   });
-  $scope.signup.hide();
-    $state.go('login');
+    $state.go('tour1');
 }).catch(function(error) {
   console.error("Error: ", error);
   $ionicLoading.show({

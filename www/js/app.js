@@ -31,16 +31,6 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
-  .state('app.account', {
-      url: '/account',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/account.html',
-          controller: 'AccountCtrl'
-        }
-      }
-    })
     
     .state('app.reminder', {
       url: '/reminder',
@@ -51,6 +41,27 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
         }
       }
     })
+
+    .state('register', {
+      url: '/register',
+      templateUrl: 'templates/register.html',
+      controller: 'loginCtrl',
+      cache:false
+      })
+
+    .state('tour1', {
+      url: '/tour1',
+      templateUrl: 'templates/tour1.html',
+      controller: 'loginCtrl',
+      cache:false
+      })
+
+.state('tour2', {
+      url: '/tour2',
+      templateUrl: 'templates/tour2.html',
+      controller: 'AccountCtrl',
+      cache:false
+      })
 
     .state('app.vaccount', {
     url: '/vaccount',
