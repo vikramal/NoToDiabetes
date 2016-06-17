@@ -1,4 +1,4 @@
-<ion-view>
+<ion-modal-view class="pane">
 <ion-header-bar class="bar-dark">
   <h1 class="title">Add New Reminder</h1>
     <button class="button button-clear button-light" ng-click="addreminder.hide()">Close</button>
@@ -25,9 +25,11 @@
   </label>
   <ion-checkbox ng-model="repeat">Repeat</ion-checkbox>
   </form>
+  <div class="item">
   <button class="button button-block button-positive" ng-disabled="reminderForm.$invalid" ng-click="reminderadd(rname,rdate,rtime,rdescrip,repeat)">
       Set
   </button>
+</div>
 
 </div>
 </ion-content>

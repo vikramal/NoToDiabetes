@@ -1,4 +1,4 @@
-<ion-view title="Register" hide-back-button="false">
+<ion-view title="Register" hide-back-button="false" class="pane">
   <ion-content class="padding "padding="true">
     <div class="list card">
       <form name="registerForm">
@@ -11,9 +11,11 @@
             <input type="password" ng-model="rpassword" placeholder="Password" required="yes">
           </label>
         </form>
+        <div class="item">
           <button class="button button-full button-positive" ng-disabled="registerForm.$invalid" ng-click="register(remail,rpassword)">
               Sign-up
           </button>
+        </div>
 </div>
 </ion-content>
 </ion-view>
