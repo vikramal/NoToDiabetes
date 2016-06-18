@@ -2,6 +2,8 @@ angular.module('starter.controllers', [])
 
 .controller('loginCtrl',['$scope','$ionicModal','$ionicLoading','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$ionicLoading,$firebaseAuth,$state,AUTHREF)
 {
+
+
  $ionicModal.fromTemplateUrl('templates/modals/forgot.html',
  {
     scope: $scope,
@@ -118,10 +120,6 @@ $scope.aupdate=function(_aemail,_sex)
       $state.go("app.news");
     }
     else {
-      $ionicLoading.show({
-        template:'<center>Please Login..</center>',
-        duration: 2000
-      });
       $state.go("login");
     }
   }
@@ -150,7 +148,7 @@ $scope.logout=function()
    $scope.changepwd=function(_oldpwd,_newpwd)
      {
        $ionicLoading.show({
-         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Changing Password...</center>'
+         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Resetting Password...</center>'
        });
 
        var authObj = $firebaseAuth(AUTHREF);
@@ -197,36 +195,34 @@ $scope.acct = {
   age: null,
   food: null,
   level: null,
-  profession: null
-
+  profession: null,
+  breakfast: null,
+  lunch: null,
+  dinner: null,
+  exercise:null
 };
 
-console.log($scope.acct);
 
 $scope.selectSex = function(_sex){
   $scope.acct.sex = _sex;
-  console.log($scope.acct);
 }
 $scope.selectType = function(_type){
   $scope.acct.type = _type;
-  console.log($scope.acct);
 }
 $scope.selectAge = function(_age){
   $scope.acct.age = _age;
-  console.log($scope.acct);
 }
 $scope.selectFood = function(_food){
   $scope.acct.food = _food;
-  console.log($scope.acct);
 }
 $scope.selectLevel = function(_level){
   $scope.acct.level = _level;
-  console.log($scope.acct);
 }
 $scope.selectProf = function(_prof){
   $scope.acct.profession = _prof;
   console.log($scope.acct);
 }
+
 
 $scope.acctList = function(){
 
@@ -244,32 +240,479 @@ $scope.acctList = function(){
   }//end of fbAuth
 }//end of account list function
 
-$scope.saveAccount = function(_fname){
+$scope.saveAccount = function(_fname)
+{
+  if($scope.acct.age === "< 30" && $scope.acct.level === "127-153" && $scope.acct.profession === "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("0").on('value',function(data)
+    {
+      var p =data.val().Breakfast.toString();
+      $scope.acct.breakfast = p;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-$scope.acct.name = _fname;
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("< 30 and 127 -153 and Profession");
+  }
+  if($scope.acct.age === "< 30" && $scope.acct.level === "127-153" && $scope.acct.profession === "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("1").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-var authObj = $firebaseAuth(AUTHREF).$getAuth();
-console.log(authObj);
-var obj = ITEMREF.child(authObj.uid);
-console.log(obj);
-$scope.acct.email = authObj.password.email;
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("< 30 and 127 -153 and No-Profession");
+  }
+  if($scope.acct.age == "< 30" && $scope.acct.level == "154-195" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("2").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-var prof = $firebaseObject(obj);
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("< 30 and 154-195 and Profession");
+  }
+  if($scope.acct.age == "< 30" && $scope.acct.level == "154-195" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("3").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-prof.account = $scope.acct;
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("< 30 and 154-195 and No-Profession");
+  }
+  if($scope.acct.age == "< 30" && $scope.acct.level == "Keeps Fluctuating" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("4").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-prof.$save().then(function(ITEMREF){
-  $ionicLoading.show({
-    template:'<center>Account Information Saved Successfully</center>',
-    duration: 2000
-  });
-$state.go("app.news");
-  console.log(prof.$id);
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("< 30 and Keeps Fluctuating and Profession");
+  }
+  if($scope.acct.age == "< 30" && $scope.acct.level == "Keeps Fluctuating" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("5").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-}, function(error){
-  console.log("Error: ", error);
-});
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("< 30 and Keeps Fluctuating and No-Profession");
+  }
+  //age < 30
+  if($scope.acct.age == "30 - 60" && $scope.acct.level == "127-153" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("6").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("30 - 60 and 127 -153 and Profession");
+  }
+  if($scope.acct.age == "30 - 60" && $scope.acct.level == "127-153" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("7").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("30 - 60 and 127 -153 and No-Profession");
+  }
+  if($scope.acct.age == "30 - 60" && $scope.acct.level == "154-195" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("8").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("30 - 60 and 154-195 and Profession");
+  }
+  if($scope.acct.age == "30 - 60" && $scope.acct.level == "154-195" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("9").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("30 - 60 and 154-195 and No-Profession");
+  }
+  if($scope.acct.age == "30 - 60" && $scope.acct.level == "Keeps Fluctuating" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("10").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("30 - 60 and Keeps Fluctuating and Profession");
+  }
+  if($scope.acct.age == "30 - 60" && $scope.acct.level == "Keeps Fluctuating" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("11").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("30 - 60 and Keeps Fluctuating and No-Profession");
+  }
+  //age 30-60
+  if($scope.acct.age == "> 60 " && $scope.acct.level == "127-153" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("12").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("> 60  and 127 -153 and Profession");
+  }
+  if($scope.acct.age == "> 60 " && $scope.acct.level == "127-153" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("13").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("> 60  and 127 -153 and No-Profession");
+  }
+  if($scope.acct.age == "> 60 " && $scope.acct.level == "154-195" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("14").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("> 60  and 154-195 and Profession");
+  }
+  if($scope.acct.age == "3> 60 " && $scope.acct.level == "154-195" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("15").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("> 60  and 154-195 and No-Profession");
+  }
+  if($scope.acct.age == "> 60 " && $scope.acct.level == "Keeps Fluctuating" && $scope.acct.profession == "Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("16").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast;
+      $scope.acct.lunch = data.val().Lunch;
+      $scope.acct.dinner = data.val().Dinner;
+      $scope.acct.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+    var obj = ITEMREF.child(authObj.uid);
+    $scope.acct.email = authObj.password.email;
+    var prof = $firebaseObject(obj);
+    prof.account = $scope.acct;
+    prof.$save().then(function(ITEMREF){
+    $state.go("app.vaccount");
+      console.log(prof.$id);
+    }, function(error){
+      console.log("Error: ", error);
+    });
+    });
+    console.log("> 60  and Keeps Fluctuating and Profession");
+  }
+  if($scope.acct.age == "> 60 " && $scope.acct.level == "Keeps Fluctuating" && $scope.acct.profession == "No-Profession")
+  {
+    $scope.acct.name = _fname;
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("17").on('value',function(data)
+    {
+      $scope.acct.breakfast = data.val().Breakfast.toString();
+      $scope.acct.lunch = data.val().Lunch.toString();
+      $scope.acct.dinner = data.val().Dinner.toString();
+      $scope.acct.exercise = data.val().Exercise.toString();
+
+      var obj = ITEMREF.child(authObj.uid);
+      $scope.acct.email = authObj.password.email;
+      var prof = $firebaseObject(obj);
+      prof.account = $scope.acct;
+      console.log(prof.account);
+      prof.$save().then(function(ITEMREF){
+      $state.go("app.vaccount");
+        console.log(prof.$id);
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    });
+
+    console.log("> 60  and Keeps Fluctuating and No-Profession");
+  }
+  //age > 60
 }//end of saveAccount function
 
 $scope.edit=function(_details){
@@ -292,10 +735,6 @@ $scope.editAccount = function(_edetails){
   prof.account = _edetails;
 
   prof.$save().then(function(ITEMREF){
-    $ionicLoading.show({
-      template:'<center>Account Information Updated Successfully</center>',
-      duration: 2000
-    });
     console.log(prof.$id);
     $scope.editacct.hide();
   }, function(error){
@@ -346,10 +785,6 @@ $scope.editAccount = function(_edetails){
           description: rdescip
         }).then(function(ref)
         {
-          $ionicLoading.show({
-            template:'<center>Reminder Added Successfully</center>',
-            duration: 2000
-          });
           $scope.addreminder.hide();
           console.log(ref.key())});
         }
@@ -423,10 +858,6 @@ $scope.editAccount = function(_edetails){
           obj[i].repeat=_erem.repeat;
           obj.$save(i).then(function(ref){
             ref.key() === obj.$id;
-            $ionicLoading.show({
-              template:'<center>Reminder Upadted Successfully</center>',
-              duration: 2000
-            });
             $scope.editreminder.hide();
           },function(error){
             $scope.editreminder.hide();
@@ -448,10 +879,6 @@ $scope.editAccount = function(_edetails){
         var i = obj.$indexFor(_id);
         var item = obj[i];
         obj.$remove(item).then(function(ref){
-          $ionicLoading.show({
-            template:'<center>Reminder Deleted Successfully</center>',
-            duration: 2000
-          });
           ref.key() === item.$id;
           $scope.editreminder.hide();
         }, function(error){
@@ -464,4 +891,5 @@ $scope.editAccount = function(_edetails){
       });
   }
 }
+
 }])

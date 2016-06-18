@@ -87,16 +87,27 @@ cache:false
     url: '/diet',
     views: {
       'menuContent': {
-        templateUrl: 'templates/diet.html'
+        templateUrl: 'templates/diet.html',
+        controller: 'AccountCtrl'
       }
     }
   })
+
+  .state('app.about', {
+      url: '/about',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/about.html',
+        }
+      }
+    })
 
   .state('app.exercise', {
       url: '/exercise',
       views: {
         'menuContent': {
-          templateUrl: 'templates/exercise.html'
+          templateUrl: 'templates/exercise.html',
+          controller: 'AccountCtrl'
         }
       }
     })
