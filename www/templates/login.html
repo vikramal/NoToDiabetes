@@ -1,24 +1,26 @@
-<ion-view view-title="Login" hide-back-button="true">
-  <ion-content padding="true">
+<ion-view view-title="Login" hide-back-button="true" class="pane">
+  <ion-content class="padding" padding="true" class="pane">
     <form>
-      <div class="list">
+      <div class="list card" class="pane">
           <label class="item item-input item-floating-label">
             <span class="input-label">E-mail</span>
-            <input type="email" ng-model="email" placeholder="abc@noto.com" required="yes">
+            <input type="email" ng-model="email" placeholder="abc@notodiabetes.com" required="yes">
           </label>
           <label class="item item-input item-floating-label">
             <span class="input-label">Password</span>
             <input type="password" ng-model="password" placeholder="Password" required="yes">
           </label>
-          <button class="button button-block button-calm" ng-disabled="!email || !password" ng-click="login(email,password)">
+          <div class="item">
+          <button class="button button-block button-royal" ng-disabled="!email || !password" ng-click="login(email,password)">
               Login
           </button>
           <a class="button button-clear button-block button-dark" ng-click="forgot.show()">
             Forgot Password?
           </a>
-          <button class="button button-block button-positive" ng-click="signup.show()">
+          <button class="button button-block button-positive" ui-sref='register'>
               Register
           </button>
+        </div>
       </div>
     </form>
   </ion-content>

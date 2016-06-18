@@ -1,11 +1,11 @@
-<ion-modal-view>
+<ion-modal-view class="pane">
   <ion-header-bar class="bar-dark">
     <h1 class="title">Edit Account</h1>
       <button class="button button-clear button-light" ng-click="editacct.hide()">Close</button>
   </ion-header-bar>
-  <ion-content class="padding" padding="true">
+  <ion-content class="padding" padding="true" class="pane">
     <form>
-      <div class="list">
+      <div class="list card">
         <label class="item item-input item-stacked-label">
           <span class="input-label">Name</span>
           <input type="text" ng-model="edetails.name">
@@ -67,9 +67,11 @@
           </select>
         </label>
         </form>
+        <div class="item">
         <button class="button button-block button-positive" ng-click="editAccount(edetails)">
             Update
         </button>
+      </div>
       </div>
   </ion-content>
 </ion-modal-view>

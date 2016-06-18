@@ -1,13 +1,6 @@
 /* Empty. Add your own CSS if you like */
-.pbackground
+.pane
 {
-background: url(../img/db.png);
-background-repeat: no-repeat;
-background-size: contain;
-background-position: center;
-width: 80%;
-height: 250px;
-margin: auto;
-z-index: 2;
-position: relative;
+background: #11c1f3;
+
 }

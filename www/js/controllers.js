@@ -2,16 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('loginCtrl',['$scope','$ionicModal','$ionicLoading','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$ionicLoading,$firebaseAuth,$state,AUTHREF)
 {
-
-$ionicModal.fromTemplateUrl('templates/modals/register.html',
-{
-   scope: $scope,
-   animation: 'slide-in-up'
- }).then(function(signup) {
-   $scope.signup = signup;
- });//signup modal
-
-
  $ionicModal.fromTemplateUrl('templates/modals/forgot.html',
  {
     scope: $scope,
@@ -25,18 +15,23 @@ $scope.register=function (_remail, _rpassword)
   $ionicLoading.show({
     template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Creating An Account...</center>'
   });
- $firebaseAuth(AUTHREF).$createUser({
+  var authobj = $firebaseAuth(AUTHREF);
+ authobj.$createUser({
    email: _remail,
    password: _rpassword
  }).then(function(userData) {
-
+   return authobj.$authWithPassword({
+     email: _remail,
+     password: _rpassword
+   });
+ }).then(function(authData)
+ {
   $ionicLoading.hide();
   $ionicLoading.show({
-    template:'<center>Account Created Successfully<br>Please Login To Continue</center>',
+    template:'<center>Account Created Successfully</center>',
     duration: 1000
   });
-  $scope.signup.hide();
-    $state.go('login');
+    $state.go('tour1');
 }).catch(function(error) {
   console.error("Error: ", error);
   $ionicLoading.show({
@@ -97,9 +92,23 @@ $scope.forgotmail=function(_femail)
 });
 }//end of forgot password function
 
+
+$scope.aupdate=function(_aemail,_sex)
+{
+  var authObj = $firebaseAuth(AUTHREF);
+  authObj.$save({
+  email: _femail
+}).then(function() {
+  console.log("this function is calling");
+
+}).catch(function(error) {
+  console.error("Error: ", error);
+
+});
+}//end of account function
 }])//end of login controller
 
-.controller('protectedCtrl',['$scope','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$firebaseAuth,$state,AUTHREF)
+.controller('protectedCtrl',['$scope','$firebaseAuth','$state','AUTHREF',function protectedCtrl($scope,$firebaseAuth,$state,AUTHREF)
 {
   $scope.checklogin=function()
   {
@@ -109,12 +118,16 @@ $scope.forgotmail=function(_femail)
       $state.go("app.news");
     }
     else {
+      $ionicLoading.show({
+        template:'<center>Please Login..</center>',
+        duration: 2000
+      });
       $state.go("login");
     }
   }
 }])//end of protectedCtrl
 
-.controller('AppCtrl',['$scope','$ionicModal','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$firebaseAuth,$state,AUTHREF)
+.controller('AppCtrl',['$scope','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$firebaseAuth,$state,AUTHREF)
 {
 $scope.logout=function()
 {
@@ -124,10 +137,9 @@ $scope.logout=function()
 }
 }])//end of AppCtrl
 
-.controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function loginCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF)
-{
+.controller('AccountCtrl',['$scope','$firebaseAuth','$firebaseObject','$ionicLoading','$ionicModal','$state','AUTHREF','ITEMREF',function AccountCtrl($scope,$firebaseAuth,$firebaseObject,$ionicLoading,$ionicModal,$state,AUTHREF,ITEMREF){
 
-    $ionicModal.fromTemplateUrl('templates/modals/change.html',
+  $ionicModal.fromTemplateUrl('templates/modals/change.html',
   {
      scope: $scope,
      animation: 'slide-in-up'
@@ -165,7 +177,19 @@ $scope.logout=function()
      });
    }//end of change password function
 
-  $scope.acct = {
+
+  $ionicModal.fromTemplateUrl('templates/modals/editaccount.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(editacct) {
+     $scope.editacct = editacct;
+   });//forgot modal
+
+
+
+
+$scope.acct = {
   name: null,
   email: null,
   sex : null,
@@ -181,18 +205,23 @@ console.log($scope.acct);
 
 $scope.selectSex = function(_sex){
   $scope.acct.sex = _sex;
+  console.log($scope.acct);
 }
 $scope.selectType = function(_type){
   $scope.acct.type = _type;
+  console.log($scope.acct);
 }
 $scope.selectAge = function(_age){
   $scope.acct.age = _age;
+  console.log($scope.acct);
 }
 $scope.selectFood = function(_food){
   $scope.acct.food = _food;
+  console.log($scope.acct);
 }
 $scope.selectLevel = function(_level){
   $scope.acct.level = _level;
+  console.log($scope.acct);
 }
 $scope.selectProf = function(_prof){
   $scope.acct.profession = _prof;
@@ -211,19 +240,18 @@ $scope.acctList = function(){
     {
       obj === x;
       $scope.details = obj;
-
-
     })
   }//end of fbAuth
 }//end of account list function
 
-  $scope.saveAccount = function(_fname){
+$scope.saveAccount = function(_fname){
 
 $scope.acct.name = _fname;
 
 var authObj = $firebaseAuth(AUTHREF).$getAuth();
+console.log(authObj);
 var obj = ITEMREF.child(authObj.uid);
-
+console.log(obj);
 $scope.acct.email = authObj.password.email;
 
 var prof = $firebaseObject(obj);
@@ -232,10 +260,10 @@ prof.account = $scope.acct;
 
 prof.$save().then(function(ITEMREF){
   $ionicLoading.show({
-    template:'<center>Saving Account Information.</center>',
+    template:'<center>Account Information Saved Successfully</center>',
     duration: 2000
   });
-$state.go("app.vaccount");
+$state.go("app.news");
   console.log(prof.$id);
 
 }, function(error){
@@ -244,20 +272,14 @@ $state.go("app.vaccount");
 
 }//end of saveAccount function
 
-$ionicModal.fromTemplateUrl('templates/modals/editaccount.html',
-  {
-     scope: $scope,
-     animation: 'slide-in-up'
-   }).then(function(editacct) {
-     $scope.editacct = editacct;
-   });//end of edit account modal
+$scope.edit=function(_details){
 
-   $scope.edit=function(_details)
-   {
-     $scope.editacct.show();
-     $scope.edetails = _details;
+  $scope.editacct.show();
 
-     console.log($scope.edetails);
+$scope.edetails = _details;
+console.log($scope.edetails);
+
+
 }//end of edit function
 
 $scope.editAccount = function(_edetails){
@@ -271,10 +293,9 @@ $scope.editAccount = function(_edetails){
 
   prof.$save().then(function(ITEMREF){
     $ionicLoading.show({
-      template:'<center>Updating Account Information.</center>',
+      template:'<center>Account Information Updated Successfully</center>',
       duration: 2000
     });
-  $state.go("app.vaccount");
     console.log(prof.$id);
     $scope.editacct.hide();
   }, function(error){
@@ -284,4 +305,163 @@ $scope.editAccount = function(_edetails){
 
 
 }//end of edit account function
+
 }])//end of Account CTRL
+
+
+.controller('ReminderCtrl',['$scope','$firebaseAuth','$firebaseArray','$ionicLoading','$ionicModal','$state','$filter','AUTHREF','ITEMREF',function ReminderCtrl($scope,$firebaseAuth,$firebaseArray,$ionicLoading,$ionicModal,$state,$filter,AUTHREF,ITEMREF)
+{
+  $scope.repeat = false;
+
+  $ionicModal.fromTemplateUrl('templates/modals/addreminder.html',
+  {
+     scope: $scope,
+     animation: 'slide-in-up'
+   }).then(function(addreminder) {
+     $scope.addreminder = addreminder;
+   });//add reminder modal
+
+   $ionicModal.fromTemplateUrl('templates/modals/editreminder.html',
+   {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(editreminder) {
+      $scope.editreminder = editreminder;
+    });//edit reminder modal
+
+  $scope.reminderadd = function(rname,rdate,rtime,rdescip,repeat)
+  {
+    var _date = $filter('date')(rdate, 'MM/dd/yyyy');
+    var _time = $filter('date')(rtime, 'H:mm');
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+    if (fbAuth)
+    {
+      var obj = ITEMREF.child(fbAuth.uid).child("reminder");
+      var obj1 = $firebaseArray(obj);
+      obj1.$add(
+        {name: rname,
+          date: _date,
+          time : _time,
+          repeat: repeat,
+          description: rdescip
+        }).then(function(ref)
+        {
+          $ionicLoading.show({
+            template:'<center>Reminder Added Successfully</center>',
+            duration: 2000
+          });
+          $scope.addreminder.hide();
+          console.log(ref.key())});
+        }
+  }//end of add reminder
+
+
+  $scope.viewreminder = function()
+  {
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+
+    if (fbAuth)
+    {
+      var ref = ITEMREF.child(fbAuth.uid).child("reminder");
+      var reminder = $firebaseArray(ref);
+      reminder.$loaded().then(function(x){
+        x === reminder;
+        $scope.listofreminders = reminder;
+      }).catch(function(error){
+        console.log(error.message);
+      });
+
+    }
+  }//end of view reminders
+
+  $scope.ereminder = function(_r,_id)
+  {
+    var vikram = new Date();
+    var d = _r.date;
+    var fd = new Date(d);
+    console.log(fd);
+    $scope.erem = {
+
+      name: _r.name,
+      date: fd,
+      time: null,
+      description:_r.description,
+      repeat: _r.repeat,
+      id: _id
+    };
+
+    var rtime = fd;
+    rtime = $filter('date')(rtime,'MM/dd/yyyy');
+    rtime = rtime + ' ' + _r.time;
+    $scope.erem.time = new Date(rtime);
+    console.log($scope.erem.time);
+    $scope.editreminder.show();
+  }
+
+  $scope.reminderedit = function(_erem)
+  {
+      var d = $filter('date')(_erem.date,'MM/dd/yyyy');
+      var fd = d.toString();
+      console.log(d,fd);
+      var t = $filter('date')(_erem.time,'H:mm');
+      var ft = t.toString();
+      console.log(t,ft);
+
+      var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+
+      if (fbAuth)
+      {
+        var ref = ITEMREF.child(fbAuth.uid).child("reminder");
+        var obj = $firebaseArray(ref);
+        obj.$loaded().then(function(x){
+          x === obj;
+          var i = obj.$indexFor(_erem.id);
+          obj[i].name=_erem.name;
+          obj[i].date= fd;
+          obj[i].time= ft;
+          obj[i].description=_erem.description;
+          obj[i].repeat=_erem.repeat;
+          obj.$save(i).then(function(ref){
+            ref.key() === obj.$id;
+            $ionicLoading.show({
+              template:'<center>Reminder Upadted Successfully</center>',
+              duration: 2000
+            });
+            $scope.editreminder.hide();
+          },function(error){
+            $scope.editreminder.hide();
+            console.log(error.message);
+          });//end of $save
+        })//end of $loaded
+  }// end of fbauth
+}//end of edit function
+
+  $scope.reminderdelete = function(_id) {
+    var fbAuth = $firebaseAuth(AUTHREF).$getAuth();
+
+    if (fbAuth)
+    {
+      var ref = ITEMREF.child(fbAuth.uid).child("reminder");
+      var obj = $firebaseArray(ref);
+      obj.$loaded().then(function(x){
+        x === obj;
+        var i = obj.$indexFor(_id);
+        var item = obj[i];
+        obj.$remove(item).then(function(ref){
+          $ionicLoading.show({
+            template:'<center>Reminder Deleted Successfully</center>',
+            duration: 2000
+          });
+          ref.key() === item.$id;
+          $scope.editreminder.hide();
+        }, function(error){
+          console.log(error.message);
+          $scope.editreminder.hide();
+        })
+      }).catch(function(error){
+        console.log(error.message);
+        $scope.editreminder.hide();
+      });
+  }
+}
+}])

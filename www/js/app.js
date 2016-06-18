@@ -25,6 +25,27 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
  cache:false
 })
 
+.state('register', {
+url: '/register',
+templateUrl: 'templates/register.html',
+controller: 'loginCtrl',
+cache:false
+})
+
+.state('tour1', {
+url: '/tour1',
+templateUrl: 'templates/tour1.html',
+controller: 'loginCtrl',
+cache:false
+})
+
+.state('tour2', {
+url: '/tour2',
+templateUrl: 'templates/tour2.html',
+controller: 'AccountCtrl',
+cache:false
+})
+
     .state('app', {
     url: '/app',
     abstract: true,
@@ -32,17 +53,7 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     controller: 'AppCtrl'
   })
 
-  .state('app.account', {
-      url: '/account',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/account.html',
-          controller: 'AccountCtrl'
-        }
-      }
-    })
-    
-    .state('app.vaccount', {
+  .state('app.vaccount', {
     url: '/vaccount',
     views: {
       'menuContent': {
@@ -53,17 +64,55 @@ angular.module('app', ['ionic', 'starter.controllers','firebase'])
     }
   })
 
+  .state('app.reminder', {
+    url: '/reminder',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/reminder.html',
+        controller: 'ReminderCtrl'
+      }
+    }
+  })
+
+  .state('app.getdiet', {
+    url: '/getdiet',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/getdiet.html',
+      }
+    }
+  })
+
+  .state('app.diet', {
+    url: '/diet',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/diet.html'
+      }
+    }
+  })
+
+  .state('app.exercise', {
+      url: '/exercise',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/exercise.html'
+        }
+      }
+    })
+
     .state('app.news', {
       url: '/news',
       views: {
         'menuContent': {
           templateUrl: 'templates/news.html',
+          //controller: 'PlaylistsCtrl'
         }
       }
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('protected');
+  $urlRouterProvider.otherwise('/protected');
 })
 
 
