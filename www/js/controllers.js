@@ -2,8 +2,6 @@ angular.module('starter.controllers', [])
 
 .controller('loginCtrl',['$scope','$ionicModal','$ionicLoading','$firebaseAuth','$state','AUTHREF',function loginCtrl($scope,$ionicModal,$ionicLoading,$firebaseAuth,$state,AUTHREF)
 {
-
-
  $ionicModal.fromTemplateUrl('templates/modals/forgot.html',
  {
     scope: $scope,
@@ -120,6 +118,10 @@ $scope.aupdate=function(_aemail,_sex)
       $state.go("app.news");
     }
     else {
+      $ionicLoading.show({
+        template:'<center>Please Login..</center>',
+        duration: 2000
+      });
       $state.go("login");
     }
   }
@@ -148,7 +150,7 @@ $scope.logout=function()
    $scope.changepwd=function(_oldpwd,_newpwd)
      {
        $ionicLoading.show({
-         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Resetting Password...</center>'
+         template:'<center><ion-spinner class="spinner-balanced" icon="bubbles"></ion-spinner></center> <br><center>Changing Password...</center>'
        });
 
        var authObj = $firebaseAuth(AUTHREF);
@@ -257,6 +259,10 @@ var prof = $firebaseObject(obj);
 prof.account = $scope.acct;
 
 prof.$save().then(function(ITEMREF){
+  $ionicLoading.show({
+    template:'<center>Account Information Saved Successfully</center>',
+    duration: 2000
+  });
 $state.go("app.news");
   console.log(prof.$id);
 
@@ -286,6 +292,10 @@ $scope.editAccount = function(_edetails){
   prof.account = _edetails;
 
   prof.$save().then(function(ITEMREF){
+    $ionicLoading.show({
+      template:'<center>Account Information Updated Successfully</center>',
+      duration: 2000
+    });
     console.log(prof.$id);
     $scope.editacct.hide();
   }, function(error){
@@ -336,6 +346,10 @@ $scope.editAccount = function(_edetails){
           description: rdescip
         }).then(function(ref)
         {
+          $ionicLoading.show({
+            template:'<center>Reminder Added Successfully</center>',
+            duration: 2000
+          });
           $scope.addreminder.hide();
           console.log(ref.key())});
         }
@@ -409,6 +423,10 @@ $scope.editAccount = function(_edetails){
           obj[i].repeat=_erem.repeat;
           obj.$save(i).then(function(ref){
             ref.key() === obj.$id;
+            $ionicLoading.show({
+              template:'<center>Reminder Upadted Successfully</center>',
+              duration: 2000
+            });
             $scope.editreminder.hide();
           },function(error){
             $scope.editreminder.hide();
@@ -430,6 +448,10 @@ $scope.editAccount = function(_edetails){
         var i = obj.$indexFor(_id);
         var item = obj[i];
         obj.$remove(item).then(function(ref){
+          $ionicLoading.show({
+            template:'<center>Reminder Deleted Successfully</center>',
+            duration: 2000
+          });
           ref.key() === item.$id;
           $scope.editreminder.hide();
         }, function(error){
@@ -442,5 +464,4 @@ $scope.editAccount = function(_edetails){
       });
   }
 }
-
 }])
