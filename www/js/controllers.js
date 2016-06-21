@@ -725,24 +725,497 @@ console.log($scope.edetails);
 
 }//end of edit function
 
-$scope.editAccount = function(_edetails){
+$scope.editAccount = function(_edetails)
+{
+  if(_edetails.age == "< 30" && _edetails.level == "127-153" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("0").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
-  var authObj = $firebaseAuth(AUTHREF).$getAuth();
-  var obj = ITEMREF.child(authObj.uid);
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
 
-  var prof = $firebaseObject(obj);
+      var prof = $firebaseObject(obj);
 
-  prof.account = _edetails;
+      prof.account = _edetails;
 
-  prof.$save().then(function(ITEMREF){
-    console.log(prof.$id);
-    $scope.editacct.hide();
-  }, function(error){
-    console.log("Error: ", error);
-  });
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "< 30" && _edetails.level == "127-153" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("1").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
 
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
 
+      var prof = $firebaseObject(obj);
 
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "< 30" && _edetails.level == "154-195" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("2").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "< 30" && _edetails.level == "154-195" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("3").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "< 30" && _edetails.level == "Keeps Fluctuating" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("4").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "< 30" && _edetails.level == "Keeps Fluctuating" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("5").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  //age < 30
+  if(_edetails.age == "30 - 60" && _edetails.level == "127-153" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("6").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "30 - 60" && _edetails.level == "127-153" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("7").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "30 - 60" && _edetails.level == "154-195" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("8").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "30 - 60" && _edetails.level == "154-195" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("9").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "30 - 60" && _edetails.level == "Keeps Fluctuating" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("10").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "30 - 60" && _edetails.level == "Keeps Fluctuating" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("11").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  //age 30 - 60
+  if(_edetails.age == "> 60 " && _edetails.level == "127-153" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("12").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "> 60 " && _edetails.level == "127-153" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("13").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "> 60 " && _edetails.level == "154-195" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("14").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "> 60 " && _edetails.level == "154-195" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("15").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "> 60 " && _edetails.level == "Keeps Fluctuating" && _edetails.profession == "Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("16").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  if(_edetails.age == "> 60 " && _edetails.level == "Keeps Fluctuating" && _edetails.profession == "No-Profession")
+  {
+    var authObj = $firebaseAuth(AUTHREF).$getAuth();
+    var a = AUTHREF.child("17").on('value',function(data)
+    {
+      _edetails.breakfast = data.val().Breakfast;
+      _edetails.lunch = data.val().Lunch;
+      _edetails.dinner = data.val().Dinner;
+      _edetails.exercise = data.val().Exercise;
+      console.log(data.val());
+      console.log($scope.acct);
+
+      var authObj = $firebaseAuth(AUTHREF).$getAuth();
+      var obj = ITEMREF.child(authObj.uid);
+
+      var prof = $firebaseObject(obj);
+
+      prof.account = _edetails;
+
+      prof.$save().then(function(ITEMREF){
+        console.log(prof.$id);
+        $scope.editacct.hide();
+      }, function(error){
+        console.log("Error: ", error);
+      });
+    })
+  }
+  //age < 30
 }//end of edit account function
 
 }])//end of Account CTRL

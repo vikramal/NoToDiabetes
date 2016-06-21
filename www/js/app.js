@@ -74,15 +74,6 @@ cache:false
     }
   })
 
-  .state('app.getdiet', {
-    url: '/getdiet',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/getdiet.html',
-      }
-    }
-  })
-
   .state('app.diet', {
     url: '/diet',
     views: {
